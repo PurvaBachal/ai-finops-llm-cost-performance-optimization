@@ -1,0 +1,37 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+credentials/
+secrets/
+
+# Local logs
+*.log
+
+# Local raw API snapshots
+data/raw/*
+!data/raw/.gitkeep
+
+# Local processed exports
+data/processed/*
+!data/processed/.gitkeep
+
+# Tableau temporary files
+*.tfl
+*.twb~
+*.tmp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VS Code local settings
+.vscode/
