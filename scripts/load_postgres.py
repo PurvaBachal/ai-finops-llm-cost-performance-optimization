@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 PROCESSED_DATA_DIR = PROJECT_ROOT / "data" / "processed"
-
+STAGING_DATA_DIR = PROJECT_ROOT / "data" / "staging"
 
 def get_database_url() -> str:
     """Load the PostgreSQL connection string."""
@@ -41,7 +41,7 @@ def load_processed_data() -> tuple[
 
     benchmark_df = pd.read_csv(PROCESSED_DATA_DIR / "benchmark_snapshot.csv")
 
-    workload_df = pd.read_csv(PROCESSED_DATA_DIR / "workload_assumptions.csv")
+    workload_df = pd.read_csv(STAGING_DATA_DIR / "workload_assumptions.csv")
 
     return model_df, benchmark_df, workload_df
 

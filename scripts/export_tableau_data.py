@@ -15,33 +15,27 @@ EXPORTS = [
     {
         "output": "model_efficiency.csv",
         "sql_file": "04_optimization_analytics.sql",
-        "statement_number": 2,
-    },
+        "statement_number": 2,},
     {
         "output": "workload_comaparison.csv",
         "sql_file": "04_optimization_analytics.sql",
-        "statement_number": 3,
-    },
+        "statement_number": 3,},
     {
         "output": "paid_workload_comparison.csv",
         "sql_file": "04_optimization_analytics.sql",
-        "statement_number": 4,
-    },
+        "statement_number": 4,},
     {
         "output": "optimization_frontier.csv",
         "sql_file": "04_optimization_analytics.sql",
-        "statement_number": 5,
-    },
+        "statement_number": 5,},
     {
         "output": "top_cost_optimization.csv",
         "sql_file": "04_optimization_analytics.sql",
-        "statement_number": 7,
-    },
+        "statement_number": 7,},
     {
         "output": "paid_cost_alternatives.csv",
         "sql_file": "04_optimization_analytics.sql",
-        "statement_number": 8,
-    },
+        "statement_number": 8,},
 ]
 
 def get_database_url() -> str:

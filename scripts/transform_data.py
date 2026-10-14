@@ -7,6 +7,7 @@ import pandas as pd
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 RAW_DATA_DIR = PROJECT_ROOT / "data" / "raw" / "openrouter"
 PROCESSED_DATA_DIR = PROJECT_ROOT / "data" / "processed"
+STAGING_DATA_DIR = PROJECT_ROOT / "data" / "staging"
 
 # Baseline assumptions for the arbitrage calculations
 WORKLOAD_ASSUMPTIONS = [
@@ -156,34 +157,56 @@ def build_benchmark_snapshot(snapshot_dir: Path) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 def main():
-    PROCESSED_DATA_DIR.mkdir(parents=True, exist_ok=True)
+    PROCESSED_DATA_DIR.mkdir(parents=True,exist_ok=True,)
+    STAGING_DATA_DIR.mkdir(parents=True,exist_ok=True,)
+
     snapshot_dirs = get_snapshot_directories()
 
     if not snapshot_dirs:
-        raise FileNotFoundError("No complete OpenRouter snapshots were found in the raw data directory.")
+        raise FileNotFoundError(
+            "No complete OpenRouter snapshots were found "
+            "in the raw data directory.")
 
     model_frames = []
     benchmark_frames = []
 
-    # Process each snapshot date folder
+    # Process each available snapshot.
     for snapshot_dir in snapshot_dirs:
-        model_frames.append(build_model_snapshot(snapshot_dir))
-        benchmark_frames.append(build_benchmark_snapshot(snapshot_dir))
+        model_frames.append(
+            build_model_snapshot(snapshot_dir))
+        benchmark_frames.append(
+            build_benchmark_snapshot(snapshot_dir))
 
-    # Combine all snapshots into main dataframes and drop exact duplicates
-    model_snapshot = pd.concat(model_frames, ignore_index=True).drop_duplicates()
-    benchmark_snapshot = pd.concat(benchmark_frames, ignore_index=True).drop_duplicates()
+    # Combine all snapshots and remove exact duplicate rows.
+    model_snapshot = (
+        pd.concat(model_frames, ignore_index=True)
+        .drop_duplicates())
+    benchmark_snapshot = (
+        pd.concat(benchmark_frames, ignore_index=True)
+        .drop_duplicates())
     workload_assumptions = pd.DataFrame(WORKLOAD_ASSUMPTIONS)
 
-    # Save to processed layer
-    model_snapshot.to_csv(PROCESSED_DATA_DIR / "model_snapshot.csv", index=False)
-    benchmark_snapshot.to_csv(PROCESSED_DATA_DIR / "benchmark_snapshot.csv", index=False)
-    workload_assumptions.to_csv(PROCESSED_DATA_DIR / "workload_assumptions.csv", index=False)
+    # Save the two datasets used by the reporting layer.
+    model_snapshot.to_csv(
+        PROCESSED_DATA_DIR / "model_snapshot.csv",
+        index=False,)
+    benchmark_snapshot.to_csv(
+        PROCESSED_DATA_DIR / "benchmark_snapshot.csv",
+        index=False,)
+
+    # Keep workload definitions separate from Tableau reporting files.
+    workload_assumptions.to_csv(
+        STAGING_DATA_DIR / "workload_assumptions.csv",
+        index=False,)
 
     print("--- Data Transformation Complete ---")
     print(f"Total Model rows generated: {len(model_snapshot):,}")
-    print(f"Total Benchmark rows generated: {len(benchmark_snapshot):,}")
-    print(f"Total Workload rows generated: {len(workload_assumptions):,}")
+    print(
+        "Total Benchmark rows generated: "
+        f"{len(benchmark_snapshot):,}")
+    print(
+        "Total Workload rows generated: "
+        f"{len(workload_assumptions):,}")
 
 if __name__ == "__main__":
     main()
