@@ -1,7 +1,5 @@
 # AI-FinOps: LLM Cost, Performance & Optimization Analytics
 
-![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white) ![Pandas](https://img.shields.io/badge/Pandas-2.x-150458?logo=pandas&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16%2B-4169E1?logo=postgresql&logoColor=white) ![Tableau](https://img.shields.io/badge/Tableau-Public-E97627?logo=tableau&logoColor=white)
-
 **Case Study Overview**
 
 A manually refreshable data analytics case study that evaluates LLM pricing, benchmark-based capability and workload-level cost trade-offs using dated public OpenRouter data.
@@ -43,7 +41,7 @@ PostgreSQL
         ↓
 SQL analytics
         ↓
-10 reporting datasets
+6 reporting datasets
         ↓
 Tableau dashboards
 ```
@@ -54,7 +52,7 @@ A manual refresh runs the end-to-end pipeline with one command:
 python .\scripts\run_pipeline.py
 ```
 
-The pipeline performs OpenRouter ingestion, transformation, validation, PostgreSQL loading, reporting-dataset generation and 10 reporting datasets refresh.
+The pipeline performs OpenRouter ingestion, transformation, validation, PostgreSQL loading, reporting-dataset generation and 6 reporting datasets refresh.
 
 The published Tableau dashboards use the stable CSV reporting layer generated for the **6 October 2026 analysis**.
 
@@ -74,8 +72,6 @@ The snapshot design preserves dated history so pricing and model movement can be
 The SQL layer uses joins, CTEs, window functions, percentiles and ranking to produce decision-focused datasets covering market/pricing mix, benchmark coverage, capability, workload cost, paid-model comparisons and the cost-capability frontier.
 
 ## Key Findings
-
-The combined **5-7 October 2026 analysis cycle** is more useful than treating any single snapshot as a permanent market view:
 
 - **The market stayed in the mid-460s, but the catalog was not static.** The 5 October pricing baseline contained **466 models**; the 7 October refresh had **465 current models** and identified **2 new and 1 removed model** versus the prior snapshot. The 6 October dashboards therefore represent a dated decision view rather than a permanent ranking.
 - **Pricing alone does not answer the model-selection question.** On 5 October, **437 of 466 models (93.78%) were priced**, 22 were free (4.72%) and 7 were pricing exceptions (1.50%). The 6 October workload analysis showed why free or low-cost models should still be assessed against the capability required for each workload.
@@ -116,7 +112,7 @@ Python transformation + validation
         ↓
 PostgreSQL
         ↓
-10 reporting datasets
+6 reporting datasets
 
 ```
 
@@ -148,7 +144,7 @@ Key limitations:
 ```text
 ai-finops-llm-cost-performance-optimization/
 │
-├── data/          # raw OpenRouter snapshots + processed reporting datasets
+├── data/          # raw OpenRouter snapshots + processed & staging datasets
 ├── database/      # PostgreSQL schema and analytics SQL
 ├── scripts/       # ingestion, transformation, validation, loading and refresh pipeline
 ├── dashboard/     # Tableau workbook and dashboard screenshots
