@@ -1,4 +1,4 @@
-# AI-FinOps: LLM Cost, Performance & Optimization Analytics
+# AI-FinOps: LLM Cost & Capability Analytics
 
 **Case Study Overview**
 
